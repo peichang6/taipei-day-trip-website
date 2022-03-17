@@ -3,7 +3,7 @@ from mysql.connector import pooling
 import mysql.connector
 from attractions_api import attractions
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="public", static_url_path="/")
 
 app.register_blueprint(attractions)
 

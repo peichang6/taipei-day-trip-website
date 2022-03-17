@@ -16,19 +16,22 @@ connection_pool = pooling.MySQLConnectionPool(pool_name=os.getenv('DB_NAME'),
                                               password=os.getenv(
                                                   'DB_PASSWORD'),
                                               database=os.getenv(
-                                                  'DB_DATABASE'),)
-mydb = connection_pool.get_connection()
-mycursor = mydb.cursor(dictionary=True)
+                                                  'DB_DATABASE'),
+                                              auth_plugin="mysql_native_password",)
 
 
 @ attractions.route('/api/attractions')
 def getdata():
+    mydb = connection_pool.get_connection()
+    mycursor = mydb.cursor(dictionary=True)
+
     page = int(request.args.get("page", 0))
     keyword = request.args.get("keyword", "")
     start = page*12
     mycursor.execute(
-        "SELECT * FROM attraction where description LIKE %s LIMIT %s,%s", (('%'+keyword+'%'), start, 12))
+        "SELECT * FROM attraction where name LIKE %s OR category LIKE %s LIMIT %s,%s", (('%'+keyword+'%'), ('%'+keyword+'%'), start, 12))
     myresult = mycursor.fetchall()
+    mydb.close()
     try:
         if myresult:
             if len(myresult)/12 == 1:
@@ -53,6 +56,10 @@ def getdata():
             return jsonify({
                 "nextPage": nextPage,
                 "data": data}), 200
+        else:
+            return jsonify({
+                "error": 'true',
+                "message": '請重新輸入'}), 200
     except 500:
         return jsonify({
             "error": 'true',
@@ -61,8 +68,12 @@ def getdata():
 
 @ attractions.route('/api/attraction/<int:attractionId>')
 def getbyId(attractionId):
+    mydb = connection_pool.get_connection()
+    mycursor = mydb.cursor(dictionary=True)
+
     mycursor.execute("SELECT COUNT(id) FROM attraction")
     result = mycursor.fetchone()
+    mydb.close()
     total_id = int(result['COUNT(id)'])
     try:
         if attractionId > total_id:
