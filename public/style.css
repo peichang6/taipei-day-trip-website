@@ -107,7 +107,6 @@
   background-position: center;
   background-repeat: no-repeat;
   cursor: pointer;
-
 }
 
 #content{
@@ -162,13 +161,27 @@ footer{
   padding: 45px;
 }
 
-@media (max-width: 768px){
-  .navbar{
-	display: flex;
-	height: 54px;
-	background: white;
-	justify-content:space-between;
-	align-items: center;
-  margin: 0 48px;
+@media (max-width: 360px){
+  .navbar > .wrapper{
+    padding: 10px;
+  }
+  .banner {
+	height: 280px;
+	background-image: url(banner.jpg);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.banner > .wrapper{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.input{
+  width: 230px;
+}  
 }
