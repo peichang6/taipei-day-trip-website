@@ -20,9 +20,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
-  margin: 12px auto;
-  position: relative;
+  width: 1200px;
+
 }
 
 .navbar_sitename{
@@ -54,7 +53,7 @@
 
  .banner {
 	min-height: 320px;
-	width: 90%;
+	width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -179,16 +178,43 @@ footer{
 }
 
 @media (max-width: 1200px) {
-  .nav_wrapper{
-    width: 100%;
+  .navbar{
+    width: 90%;
   }
-  .banner_wrap{
-    width:100%
+  .banner{
+    width:90%;
+    background-image: url(banner.svg);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    background-size:50%;
+    justify-content: space-between;
   }
+ 
 }
-@media (max-width: 440px) {
+@media (max-width: 540px) {
   .input{
     width: 90%;
+  }
+  .banner{
+    background-image: url(banner.svg);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    background-size:50%;
+    justify-content: center;
+    width:100%
+    }
+  .banner_left{
+    position: absolute;
+    left: 5%;
+  }
+  .attraction_card{
+    width: 320px;
+    height: 280px;
+  }
+
+  .attraction_card .thumbnails{
+    width: 320px;
+    height: 200px;
   }
 }
 @media (max-width: 360px) {
@@ -201,11 +227,11 @@ footer{
   .input{
     width:230px;
   }
-  .banner{
+  /* .banner{
     background-image: url(banner.svg);
     background-repeat: no-repeat;
     background-position: right bottom;
     background-size: 60%;
     justify-content: center;
-    }
+    } */
 }
