@@ -51,20 +51,22 @@ async function load_more() {
 
 function get_data(data) {
   for (i in data) {
-    let attraction_title = data[i].name
-    let mrt = data[i].mrt
-    let category = data[i].category
-    let pic = data[i].images[0]
+    let attraction_title = data[i].name;
+    let mrt = data[i].mrt;
+    let category = data[i].category;
+    let pic = data[i].images[0];
+    let id = data[i].id;
 
     let element = document.getElementById("content");
-    element.innerHTML += `<div class="attraction_card">
-        <img class="thumbnails" src="${pic}">
+    element.innerHTML +=
+      `<a href='/attraction/${id}' id="link"><div class="attraction_card">
+        <img class="thumbnails" src="${pic}" alt="attraction thumbnail">
         <div class="attraction_title">${attraction_title}</div>
         <div class="attraction_subinfo">
           <div class="attraction_mrt">${mrt}</div>
           <div class="attraction_category">${category}</div>
         </div>
-      </div>`
+      </div></a>`
   }
 }
 

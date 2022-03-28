@@ -133,14 +133,18 @@
   align-items: center;
   justify-content: center;
 }
-
+#link{
+  width: 270px;
+  height: 242px;
+  margin: 30px auto;
+  text-decoration:none;
+}
 .attraction_card{
   width: 270px;
   height: 242px;
   border: 1px #E8E8E8 solid;
   border-radius: 5px;
   overflow: hidden;
-  margin: 30px auto;
   cursor: pointer;
 }
 
