@@ -1,25 +1,25 @@
-function getAttById() {
-  let url = location.pathname;
-  if (url.indexOf('/') != -1) {
-    let getSearch = url.split("/");
-    id = getSearch[2];
-  }
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', `/api/attraction/${id}`, true);
-  xhr.onload = () => {
-    data = JSON.parse(xhr.response)['data'];
-    let pic = data.images;
-    let attraction_title = data.name;
-    let attraction_category = data.category;
-    let attraction_mrt = data.mrt;
-    let attraction_desc = data.description;
-    let attreaction_address = data.address;
-    let attreaction_transportation = data.transport;
+
+let url = location.pathname;
+if (url.indexOf('/') != -1) {
+  let getSearch = url.split("/");
+  id = getSearch[2];
+}
+var xhr = new XMLHttpRequest();
+xhr.open('GET', `/api/attraction/${id}`, true);
+xhr.onload = () => {
+  data = JSON.parse(xhr.response)['data'];
+  let pic = data.images;
+  let attraction_title = data.name;
+  let attraction_category = data.category;
+  let attraction_mrt = data.mrt;
+  let attraction_desc = data.description;
+  let attraction_address = data.address;
+  let attraction_transportation = data.transport;
 
 
-    let element = document.getElementById('content');
-    element.innerHTML =
-      `<div class="thumbnails">
+  let element = document.getElementById('content');
+  element.innerHTML =
+    `<div class="thumbnails">
         <div class='arrow_area'>
           <div class='arrow_area_left'>
             <div id="arrow_left" class='arrow_symbol'></div>
@@ -62,70 +62,76 @@ function getAttById() {
         </div>
       </div>`
 
-    const img = document.getElementById('carousel');
-    const arrow_left = document.getElementById('arrow_left');
-    const arrow_right = document.getElementById('arrow_right');
+  const img = document.getElementById('carousel');
+  const arrow_left = document.getElementById('arrow_left');
+  const arrow_right = document.getElementById('arrow_right');
+  const dot_area = document.getElementById('dot_area');
+  for (i = 0; i < pic.length; i++) {
+    const dot = document.createElement('div');
+    dot.setAttribute('id', 'carousel_dot');
+    dot_area.appendChild(dot);
+  }
+  dot_area.children[0].className = 'selected';
+  img.src = pic[0];
+  let position = 0;
 
-    img.src = pic[0];
-    let position = 0;
-
-    const moveLeft = () => {
-      if (position < 1) {
-        position = pic.length - 1;
-        img.src = pic[position];
-        return;
-      }
-      img.src = pic[position - 1];
-      position--;
+  const moveRight = () => {
+    if (position >= pic.length - 1) {
+      position = 0
+      img.src = pic[position];
+      dot_area.children[position].className = 'selected'
+      dot_area.children[pic.length - 1].className = '';
+      return;
     }
+    img.src = pic[position + 1];
+    dot_area.children[position + 1].className = 'selected';
+    dot_area.children[position].className = '';
+    position++;
+  }
 
-    const moveRight = () => {
-      if (position >= pic.length - 1) {
-        position = 0
-        img.src = pic[position];
-        return;
-      }
-      img.src = pic[position + 1];
-      position++;
+  const moveLeft = () => {
+    if (position < 1) {
+      position = pic.length - 1;
+      img.src = pic[position];
+      dot_area.children[position].className = 'selected';
+      dot_area.children[0].className = '';
+      return;
     }
-    arrow_left.addEventListener("click", moveLeft);
-    arrow_right.addEventListener("click", moveRight);
-
-    for (i = 0; i < pic.length; i++) {
-      const dot_area = document.getElementById('dot_area');
-      const dot = document.createElement('div');
-      dot.setAttribute('id', 'carousel_dot');
-      dot_area.appendChild(dot);
-      dot.addEventListener("click", () => {
-        img.src = pic[position];
-      })
-    }
+    img.src = pic[position - 1];
+    dot_area.children[position - 1].className = 'selected';
+    dot_area.children[position].className = '';
+    position--;
+  }
+  arrow_left.addEventListener("click", moveLeft);
+  arrow_right.addEventListener("click", moveRight);
 
 
-    let element_desc = document.getElementById('desc_wrap');
-    element_desc.innerHTML = `<div class="attraction_desc">${attraction_desc
-      }</div>
-    <div class="attreaction_address">景點地址：
-      <div class="api_address">${attreaction_address}</div>
+
+
+  let element_desc = document.getElementById('desc_wrap');
+  element_desc.innerHTML = `<div class="attraction_desc">${attraction_desc
+    }</div>
+    <div class="attraction_address">景點地址：
+      <div class="api_address">${attraction_address}</div>
     </div>
-    <div class="attreaction_transportation">交通方式：
-      <div class="api_transportation">${attreaction_transportation}</div>
+    <div class="attraction_transportation">交通方式：
+      <div class="api_transportation">${attraction_transportation}</div>
     </div>`
 
-    let input = document.querySelector('input[name="time"]');
-    let result = document.querySelector('#result');
-    if (input != null) {
-      document.querySelectorAll('input[name="time"]').forEach((radio) => {
-        radio.addEventListener("click", function (event) {
-          let item = event.target.value;
-          result.textContent = item;
-        });
+  let input = document.querySelector('input[name="time"]');
+  let result = document.querySelector('#result');
+  if (input != null) {
+    document.querySelectorAll('input[name="time"]').forEach((radio) => {
+      radio.addEventListener("click", function (event) {
+        let item = event.target.value;
+        result.textContent = item;
       });
-    }
+    });
   }
-  xhr.send();
 }
+xhr.send();
 
-getAttById()
+
+
 
 

@@ -2,10 +2,12 @@ from flask import *
 from mysql.connector import pooling
 import mysql.connector
 from attractions_api import attractions
+from users_api import users
 
 app = Flask(__name__, static_folder="public", static_url_path="/")
 
 app.register_blueprint(attractions)
+app.register_blueprint(users)
 
 app.secret_key = "the key"
 app.config["JSON_AS_ASCII"] = False
