@@ -7,18 +7,59 @@
   <link rel="stylesheet" type="text/css" href="/normalize.css" />
   <link rel="stylesheet" type="text/css" href="/attraction.css" />
   <title>台北一日遊</title>
+  <script type="text/javascript" src="/attraction.js" defer></script>
+  <script type="text/javascript" src="/member.js" defer></script>
 
 </head>
 
 <body>
   <div class="nav_wrap">
     <nav class="navbar">
-      <div class="navbar_sitename">台北一日遊</div>
+      <a href="/" class="navbar_sitename">台北一日遊</a>
       <ul class="navbar__list">
-        <li><a href="#">預定行程</a></li>
-        <li><a href="#">登入/註冊</a></li>
+        <li>
+          <p id="test">預定行程</p>
+        </li>
+        <li>
+          <p id="popup_btn">登入/註冊</p>
+        </li>
+        <li>
+          <p id="logout_btn">登出系統</p>
+        </li>
       </ul>
     </nav>
+  </div>
+  <div id="dialog">
+    <div class="login_card">
+      <div class="topbar"></div>
+      <div class="login_title">
+        <h2>登入會員帳號</h2>
+        <div id="close_icon" class="close_icon"></div>
+      </div>
+      <form action='/api/user' class="input_area">
+        <input id="login_email" class="input_field" type="email" name="login_email" placeholder="輸入電子信箱" />
+        <input id="login_password" class="input_field" type="password" name="login_password" placeholder="輸入密碼" />
+        <button class="input_field login_btn">登入帳戶</button>
+      </form>
+      <div class="login_status"></div>
+      <p class="changeto_register">還沒有帳戶？<span class="go_register">點此註冊</span></p>
+    </div>
+
+    <div class="register_card">
+      <div class="topbar"></div>
+      <div class="register_title">
+        <h2>註冊會員帳號</h2>
+        <div id="close_icon" class="close_icon"></div>
+      </div>
+      <form action='/api/user' class="input_area">
+        <input id="name" class="input_field" type="text" name="name" placeholder="輸入姓名" />
+        <input id="email" class="input_field" type="email" name="email" placeholder="輸入電子信箱" />
+        <input id="password" class="input_field" type="password" name="password" placeholder="輸入密碼" />
+        <button class="input_field register_btn">註冊新帳戶</button>
+      </form>
+      <div class="register_status"></div>
+      <p class="changeto_login">已經有帳戶？<span class="go_login">點此登入</span></p>
+    </div>
   </div>
   <div class="content_wrap">
     <div id="content" class="content">
@@ -66,6 +107,6 @@
   </footer>
 
 </body>
-<script type="text/javascript" src="/attraction.js"></script>
+
 
 </html>

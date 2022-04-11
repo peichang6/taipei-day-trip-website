@@ -1,4 +1,3 @@
-
 let url = location.pathname;
 if (url.indexOf('/') != -1) {
   let getSearch = url.split("/");
@@ -75,6 +74,7 @@ xhr.onload = () => {
   img.src = pic[0];
   let position = 0;
 
+
   const moveRight = () => {
     if (position >= pic.length - 1) {
       position = 0
@@ -97,6 +97,31 @@ xhr.onload = () => {
       dot_area.children[0].className = '';
       return;
     }
+
+
+  const moveRight = () => {
+    if (position >= pic.length - 1) {
+      position = 0
+      img.src = pic[position];
+      dot_area.children[position].className = 'selected'
+      dot_area.children[pic.length - 1].className = '';
+      return;
+    }
+    img.src = pic[position + 1];
+    dot_area.children[position + 1].className = 'selected';
+    dot_area.children[position].className = '';
+    position++;
+  }
+
+  const moveLeft = () => {
+    if (position < 1) {
+      position = pic.length - 1;
+      img.src = pic[position];
+      dot_area.children[position].className = 'selected';
+      dot_area.children[0].className = '';
+      return;
+    }
+
     img.src = pic[position - 1];
     dot_area.children[position - 1].className = 'selected';
     dot_area.children[position].className = '';
@@ -129,9 +154,5 @@ xhr.onload = () => {
     });
   }
 }
+
 xhr.send();
-
-
-
-
-
