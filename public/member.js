@@ -26,6 +26,31 @@ function register_popup() {
 }
 register_popup()
 
+function go_booking() {
+  const booking_btn = document.querySelector('#booking_btn');
+  booking_btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    fetch('/api/user')
+      .then((res) => {
+        return res.json();
+      }).then((data) => {
+        if (data['data'] == null) {
+          document.querySelector('#dialog').style.display = 'block';
+          document.querySelector(".login_card").style.display = 'block';
+          document.querySelector("#login_email").value = '';
+          document.querySelector("#login_password").value = '';
+          document.querySelector('.login_status').textContent = '';;
+
+        } else {
+          window.location.href = "/booking"
+
+        }
+      })
+  })
+}
+go_booking()
+
+
 let go_login = document.querySelector('.go_login');
 go_login.addEventListener('click', () => {
   document.querySelector(".login_card").style.display = 'block';

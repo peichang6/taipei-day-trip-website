@@ -1,3 +1,4 @@
+
 let url = location.pathname;
 if (url.indexOf('/') != -1) {
   let getSearch = url.split("/");
@@ -16,50 +17,55 @@ xhr.onload = () => {
   let attraction_transportation = data.transport;
 
 
-  let element = document.getElementById('content');
-  element.innerHTML =
+
+  let content_wrap = document.querySelector('.content_wrap')
+  var newElement = document.createElement('div');
+  newElement.setAttribute('id', 'content');
+  newElement.setAttribute('class', 'content');
+  newElement.innerHTML =
     `<div class="thumbnails">
-        <div class='arrow_area'>
-          <div class='arrow_area_left'>
-            <div id="arrow_left" class='arrow_symbol'></div>
+            <div class='arrow_area'>
+              <div class='arrow_area_left'>
+                <div id="arrow_left" class='arrow_symbol'></div>
+              </div>
+              <div class='arrow_area_right'>
+                <div id="arrow_right" class='arrow_symbol'></div>
+              </div> 
+            </div>
+            <img id="carousel" src="${pic[0]}" alt="">
+            <div id="dot_area">
+            </div>   
           </div>
-          <div class='arrow_area_right'>
-            <div id="arrow_right" class='arrow_symbol'></div>
-          </div> 
-        </div>
-        <img id="carousel" src="${pic[0]}" alt="">
-        <div id="dot_area">
-        </div>   
-      </div>
-      <div class="attraction_info">
-        <div class="attraction_title">${attraction_title}</div>
-        <div class="attraction_subinfo">
-          <div class="attraction_category">${attraction_category}</div>
-          <a> at </a>
-          <div class="attraction_mrt">${attraction_mrt}</div>
-        </div>
-        <div class="order">
-          <div>
-            <h4>訂購導覽行程</h4>
-          </div>
-          <div>
-            <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
-          </div>
-          <div class="order_date">選擇日期：<input type="date"></div>
-          <div class="order_time">選擇時間：
-            <label>
-              <input class="radio_input" type="radio" name="time" value="新台幣 2000 元" checked/>
-              <div class=radio_text>上半天</div>
-            </label>
-            <label>
-              <input class="radio_input" type="radio" name="time"  value="新台幣 2500 元"/>
-              <div class=radio_text>下半天</div>
-            </label>
-          </div>
-          <div class="order_price">導覽費用：<a id="result">新台幣 2000 元</a></div>
-          <button class="btn_order">開始預訂行程</button>
-        </div>
-      </div>`
+          <div class="attraction_info">
+            <div class="attraction_title">${attraction_title}</div>
+            <div class="attraction_subinfo">
+              <div class="attraction_category">${attraction_category}</div>
+              <a> at </a>
+              <div class="attraction_mrt">${attraction_mrt}</div>
+            </div>
+            <div class="order">
+              <div>
+                <h4>訂購導覽行程</h4>
+              </div>
+              <div>
+                <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
+              </div>
+              <div class="order_date">選擇日期：<input id="date" type="date"></div>
+              <div class="order_time">選擇時間：
+                <label>
+                  <input id="morning" class="radio_input" type="radio" name="time" value="2000" checked/>
+                  <div class=radio_text>上半天</div>
+                </label>
+                <label>
+                  <input id="afternoon" class="radio_input" type="radio" name="time"  value="2500"/>
+                  <div class=radio_text>下半天</div>
+                </label>
+              </div>
+              <div class="order_price">導覽費用：<a id="result">新台幣 2000 元</a></div>
+              <button class="btn_order">開始預訂行程</button>
+            </div>
+          </div>`
+  content_wrap.appendChild(newElement);
 
   const img = document.getElementById('carousel');
   const arrow_left = document.getElementById('arrow_left');
@@ -110,12 +116,12 @@ xhr.onload = () => {
   let element_desc = document.getElementById('desc_wrap');
   element_desc.innerHTML = `<div class="attraction_desc">${attraction_desc
     }</div>
-    <div class="attraction_address">景點地址：
-      <div class="api_address">${attraction_address}</div>
-    </div>
-    <div class="attraction_transportation">交通方式：
-      <div class="api_transportation">${attraction_transportation}</div>
-    </div>`
+        <div class="attraction_address">景點地址：
+          <div class="api_address">${attraction_address}</div>
+        </div>
+        <div class="attraction_transportation">交通方式：
+          <div class="api_transportation">${attraction_transportation}</div>
+        </div>`
 
   let input = document.querySelector('input[name="time"]');
   let result = document.querySelector('#result');
@@ -123,9 +129,53 @@ xhr.onload = () => {
     document.querySelectorAll('input[name="time"]').forEach((radio) => {
       radio.addEventListener("click", function (event) {
         let item = event.target.value;
-        result.textContent = item;
+        result.textContent = '新台幣 ' + item + ' 元';
       });
     });
   }
+  //開始預定行程按鈕
+  const booking = document.querySelector('.btn_order');
+  booking.addEventListener("click", () => {
+    fetch('/api/user')
+      .then((res) => {
+        return res.json();
+      }).then((data) => {
+        if (data['data'] == null) {
+          document.querySelector('#dialog').style.display = 'block';
+          document.querySelector(".login_card").style.display = 'block';
+          document.querySelector("#login_email").value = '';
+          document.querySelector("#login_password").value = '';
+          document.querySelector('.login_status').textContent = '';
+        } else {
+          let date = document.querySelector('#date').value;
+          let time = document.querySelector('input[name="time"]:checked');
+
+          fetch(('/api/booking'), {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              "attractionId": id,
+              "date": date,
+              "time": time.id,
+              "price": time.value
+            })
+          }).then((res) => {
+            return res.json();
+          }).then((data) => {
+            if (!date) {
+              document.querySelector('#date').style.color = 'red'
+            }
+            if (data['ok'] == true) {
+              console.log(data)
+              window.location.href = "/booking"
+            }
+          })
+        }
+      })
+  })
 }
 xhr.send();
+
+
+
+
