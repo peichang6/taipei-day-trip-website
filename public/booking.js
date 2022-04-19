@@ -58,6 +58,11 @@ document.querySelector(".delete").addEventListener("click", () => {
   fetch('/api/booking', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' }
+  }).then((res) => {
+    return res.json()
+  }).then((data) => {
+    if (data['ok'] == true) {
+      window.location.href = "/booking"
+    }
   })
-  window.location.href = "/booking"
 })  
