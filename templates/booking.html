@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/normalize.css" />
+  <link rel="stylesheet" type="text/css" href="/booking.css" />
+  <title>台北一日遊</title>
+  <script type="text/javascript" src="/member.js" defer></script>
+  <script type="text/javascript" src="/booking.js" defer></script>
+
+</head>
+
+<body>
+  <div class="nav_wrap">
+    <nav class="navbar">
+      <a href="/" class="navbar_sitename">台北一日遊</a>
+      <ul class="navbar__list">
+        <li>
+          <p id="booking_btn">預定行程</p>
+        </li>
+        <li>
+          <p id="popup_btn">登入/註冊</p>
+        </li>
+        <li>
+          <p id="logout_btn">登出系統</p>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div id="dialog">
+    <div class="login_card">
+      <div class="topbar"></div>
+      <div class="login_title">
+        <h2>登入會員帳號</h2>
+        <div id="close_icon" class="close_icon"></div>
+      </div>
+      <form action='/api/user' class="input_area">
+        <input id="login_email" class="input_field" type="email" name="login_email" placeholder="輸入電子信箱" />
+        <input id="login_password" class="input_field" type="password" name="login_password" placeholder="輸入密碼" />
+        <button class="input_field login_btn">登入帳戶</button>
+      </form>
+      <div class="login_status"></div>
+      <p class="changeto_register">還沒有帳戶？<span class="go_register">點此註冊</span></p>
+    </div>
+
+    <div class="register_card">
+      <div class="topbar"></div>
+      <div class="register_title">
+        <h2>註冊會員帳號</h2>
+        <div id="close_icon" class="close_icon"></div>
+      </div>
+      <form action='/api/user' class="input_area">
+        <input id="name" class="input_field" type="text" name="name" placeholder="輸入姓名" />
+        <input id="email" class="input_field" type="email" name="email" placeholder="輸入電子信箱" />
+        <input id="password" class="input_field" type="password" name="password" placeholder="輸入密碼" />
+        <button class="input_field register_btn">註冊新帳戶</button>
+      </form>
+      <div class="register_status"></div>
+      <p class="changeto_login">已經有帳戶？<span class="go_login">點此登入</span></p>
+    </div>
+  </div>
+  <div class="content_title">您好，<span class="username"></span>，待預訂的行程如下：</div>
+  <div class="no_order_msg">目前沒有任何待預訂的行程</div>
+  <div class="content_wrap">
+    <div class="section">
+      <div class="attraction_info">
+        <img class="att_img" />
+        <div class="attraction_detail">
+          <div class="attraction_detail_name"></div>
+          <div class="attraction_wrap">
+            <div class="item_label">日期：</div>
+            <div class="attraction_detail_date"></div>
+          </div>
+          <div class="attraction_wrap">
+            <div class="item_label">時間：</div>
+            <div class="attraction_detail_time"></div>
+          </div>
+          <div class="attraction_wrap">
+            <div class="item_label">費用：</div>
+            <div class="attraction_detail_cost"></div>
+          </div>
+          <div class="attraction_wrap">
+            <div class="item_label">地點：</div>
+            <div class="attraction_detail_address"></div>
+          </div>
+        </div>
+        <img class="delete" src="icon_delete.png" />
+      </div>
+    </div>
+    <div class="hr"></div>
+    <div class="section">
+      <div class="user_info">
+        <div class="userinfo_title">您的聯絡資訊</div>
+        <div class=input_wrapper>
+          <div class=input_label>聯絡姓名：</div>
+          <input id="form_name" class="keyin_field" type="text" name="name" />
+        </div>
+        <div class=input_wrapper>
+          <div class=input_label>聯絡信箱：</div>
+          <input id="form_email" class="keyin_field" type="text" name="email" />
+        </div>
+        <div class=input_wrapper>
+          <div class=input_label>手機號碼：</div>
+          <input class="keyin_field" type="text" name="mobile" />
+        </div>
+        <div class="note">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+      </div>
+    </div>
+    <div class="hr"></div>
+    <div class="section">
+      <div class="creditcard_info">
+        <div class="creditcardinfo_title">信用卡付款資訊</div>
+        <div class=input_wrapper>
+          <div class=input_label>卡片號碼：</div>
+          <input class="keyin_field" type="password" name="card_number" />
+        </div>
+        <div class=input_wrapper>
+          <div class=input_label>過期時間：</div>
+          <input class="keyin_field" type="text" name="expired_date" placeholder="MM/YY" />
+        </div>
+        <div class=input_wrapper>
+          <div class=input_label>驗證密碼：</div>
+          <input class="keyin_field" type="text" name="cvv" placeholder="CVV" />
+        </div>
+      </div>
+    </div>
+    <div class="hr"></div>
+    <div class="section">
+      <div class="cost_check">
+        <div class="total_price">總價：<span class="price_ntd"></span></div>
+        <button class="submit">確認訂購並附款</button>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="footer">
+    COPYRIGHT © 2021 台北一日遊
+  </footer>
+
+</body>
+
+
+</html>
