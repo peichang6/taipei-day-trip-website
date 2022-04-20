@@ -176,6 +176,3 @@ xhr.onload = () => {
 }
 xhr.send();
 
-
-
-
